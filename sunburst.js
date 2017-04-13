@@ -1,23 +1,4 @@
-CREATE TABLE following_bak2 LIKE following;
-INSERT following_bak2 SELECT * FROM following;
-
-SET SQL_SAFE_UPDATES = 0;
-
-DELETE FROM following
-WHERE id IN 
-(SELECT id FROM
-(SELECT a.id
-FROM following a
-JOIN users b
-ON a.target_id = b.id
-WHERE DATEDIFF(NOW(),b.last_seen_at) >=30
-AND DATEDIFF(NOW(),b.last_action_at) >=30
-ORDER BY b.last_seen_at DESC
-) a
-)
-;
-
-SET SQL_SAFE_UPDATES = 1;// Modified from Kerry Rodden's "sequence sunburst"
+  // Modified from Kerry Rodden's "sequence sunburst"
   // https://bl.ocks.org/kerryrodden/7090426
   sunburstChart: function(o) {
     var id = alamode.makeId(10);
